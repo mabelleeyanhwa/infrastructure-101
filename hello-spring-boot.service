@@ -1,0 +1,7 @@
+[Unit]
+Description=Hello Spring Boot service
+[Service]
+ExecStart=/usr/bin/java -jar  /var/hello-spring-boot/hello-spring-boot.jar
+
+[Install]
+WantedBy=multi-user.target

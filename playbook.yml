@@ -1,0 +1,34 @@
+---
+- name: Deploy hello world java
+  hosts: all
+  become: yes
+  vars:
+    service_file: /lib/systemd/system/hello-spring-boot.service
+  tasks:
+    - name: Install Java
+      apt:
+        name: default-jre
+        update_cache: yes
+    - name: Create folders
+      file:
+        path: /var/hello-spring-boot
+        state: directory
+    - name: Copy JAR file
+      copy:
+        src: hello-spring-boot-0.1.0.jar
+        dest: /var/hello-spring-boot/hello-spring-boot.jar
+    - name: Copy service file
+      copy:
+        src: hello-spring-boot.service
+        dest: '{{ service_file }}'
+    - name: Make service file executable
+      file:
+        path: '{{ service_file }}'
+        mode: 755
+    - name: Reload services
+      systemd:
+        daemon_reload: yes
+    - name: Start service
+      service:
+        name: hello-spring-boot
+        state: started
