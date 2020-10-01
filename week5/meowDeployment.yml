@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: meow-deployment
+  labels:
+    app: meow-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: meow
+  template:
+    metadata:
+      labels:
+        app: meow
+    spec:
+      containers:
+      - name: meow
+        image: janesee3/meow-application:1
+        env:
+        - name: DO_YOU_LIKE_CATS
+          value: "Yes"
+        - name: CATS_URL
+          value: "http://cat-application:8080/cats"
+        ports:
+        - containerPort: 8080

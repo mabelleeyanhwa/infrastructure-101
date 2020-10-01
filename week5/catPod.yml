@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: catapp
+spec:
+  containers:
+    - name: catapp
+      image: janesee3/cat-application:1
+  restartPolicy: OnFailure
+  # kubectl port-forward pods/catapp 8080:8080
